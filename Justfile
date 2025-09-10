@@ -13,4 +13,3 @@ build-rust-wasm-release:
 [working-directory: "rust"]
 build-rust-release:
     cargo build --release
-
