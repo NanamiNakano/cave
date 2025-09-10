@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bc0f3cnhu3dji"]
+
+[ext_resource type="Texture2D" uid="uid://wfpou82inu6o" path="res://doggo_1.svg" id="1_f7cmv"]
+
+[node name="Sprite2D" type="Sprite2D"]
+texture = ExtResource("1_f7cmv")
