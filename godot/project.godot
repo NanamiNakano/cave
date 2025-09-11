@@ -12,3 +12,7 @@ config_version=5
 
 config/name="Cave"
 config/features=PackedStringArray("4.4", "Forward Plus")
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
