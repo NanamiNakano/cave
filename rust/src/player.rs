@@ -22,10 +22,10 @@ impl ICharacterBody3D for Player {
         let mut direction = Vector3::ZERO;
 
         let input = Input::singleton();
-        if input.is_action_pressed("move_right") {
+        if input.is_action_pressed("move_left") {
             direction.x += 1.0;
         }
-        if input.is_action_pressed("move_left") {
+        if input.is_action_pressed("move_right") {
             direction.x -= 1.0;
         }
         if input.is_action_pressed("move_forward") {
