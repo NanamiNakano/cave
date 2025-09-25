@@ -13,3 +13,7 @@ build-rust-wasm-release:
 [working-directory: "rust"]
 build-rust-release:
     cargo build --release
+
+sign-godot-debugging:
+    codesign -s - --deep --force --options=runtime \
+        --entitlements ./editor.entitlements /Applications/Godot.ap
