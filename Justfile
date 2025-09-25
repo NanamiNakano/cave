@@ -16,4 +16,4 @@ build-rust-release:
 
 sign-godot-debugging:
     codesign -s - --deep --force --options=runtime \
-        --entitlements ./editor.entitlements /Applications/Godot.ap
+        --entitlements ./editor.entitlements /Applications/Godot.app
