@@ -5,7 +5,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_ixlod"]
 size = Vector3(0.7, 2, 0.7)
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="Player"]
 
 [node name="Pivot" type="Node3D" parent="."]
 
@@ -20,4 +20,4 @@ shape = SubResource("BoxShape3D_ixlod")
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.6514647, 0.14596176)
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0655145e-08, 0, -0.12188065)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2124008e-08, 0, -0.13868248)
