@@ -40,3 +40,10 @@ shape = SubResource("BoxShape3D_nhxv8")
 mesh = SubResource("BoxMesh_ryjsw")
 
 [node name="Player" parent="." instance=ExtResource("1_ryjsw")]
+
+[node name="Camera Pivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.279967, 10.941276, 9.211571)
+
+[node name="Camera3D" type="Camera3D" parent="Camera Pivot"]
+transform = Transform3D(0.5943316, -0.50097924, 0.62911826, 0, 0.78227127, 0.622938, -0.8042201, -0.37023175, 0.46492854, 0, 0, 0)
+current = true
