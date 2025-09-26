@@ -36,7 +36,7 @@ impl IControl for SettingOverlay {
                 };
             });
 
-        self.display_value();
+        self.hide();
     }
 
     fn unhandled_key_input(&mut self, event: Gd<InputEvent>) {

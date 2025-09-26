@@ -31,8 +31,6 @@ impl INode for Game {
                 Self::release_mouse();
                 base.pause();
             });
-
-        setting_overlay.bind_mut().hide();
     }
 }
 
