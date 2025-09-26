@@ -18,7 +18,7 @@ struct Player {
     #[init(node = "Head/Camera3D")]
     cam: OnReady<Gd<Camera3D>>,
 
-    base: Base<CharacterBody3D>
+    base: Base<CharacterBody3D>,
 }
 
 #[godot_api]
@@ -43,7 +43,11 @@ impl ICharacterBody3D for Player {
         if direction != Vector3::ZERO {
             let mut pivot = self.base().get_node_as::<Node3D>("Pivot");
             direction = direction.normalized();
-            pivot.set_basis(Basis::looking_at(direction, Vector3::new(0.0, 1.0, 0.0), true))
+            pivot.set_basis(Basis::looking_at(
+                direction,
+                Vector3::new(0.0, 1.0, 0.0),
+                true,
+            ))
         }
 
         if input.is_action_pressed("jump") && self.base().is_on_floor() {
@@ -57,7 +61,7 @@ impl ICharacterBody3D for Player {
             self.target_velocity += self.base().get_gravity() * delta as f32;
         }
 
-        let target_velocity = self.target_velocity.clone();
+        let target_velocity = self.target_velocity;
         self.base_mut().set_velocity(target_velocity);
         self.base_mut().move_and_slide();
     }

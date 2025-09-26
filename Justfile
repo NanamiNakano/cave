@@ -14,6 +14,11 @@ build-rust-wasm-release:
 build-rust-release:
     cargo build --release
 
-sign-godot-debugging:
+[working-directory: "rust"]
+rustfmt:
+    cargo clippy --fix --allow-dirty
+    cargo +nightly fmt
+
+macos-sign-godot-debugging:
     codesign -s - --deep --force --options=runtime \
         --entitlements ./editor.entitlements /Applications/Godot.app

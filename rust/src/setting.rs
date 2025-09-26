@@ -5,13 +5,13 @@ use snafu::{OptionExt, ResultExt, Snafu};
 #[derive(Debug, Snafu)]
 pub enum Error {
     #[snafu(display("Error when saving config"))]
-    SaveError,
+    Save,
     #[snafu(display("Error when loading config"))]
-    LoadError,
+    Load,
     #[snafu(display("Error when loading config: converting failed"))]
-    ConvertError { source: ConvertError },
+    Convert { source: ConvertError },
     #[snafu(display("Error when getting singleton"))]
-    SingletonError,
+    Singleton,
 }
 
 #[derive(GodotClass)]
@@ -26,7 +26,7 @@ fn load_config() -> Result<Gd<ConfigFile>, Error> {
     let error = inner.load("user://settings.cfg");
     match error {
         godot::global::Error::OK => Ok(inner),
-        _ => Err(Error::LoadError),
+        _ => Err(Error::Load),
     }
 }
 
@@ -42,7 +42,7 @@ impl Setting {
         let error = self.inner.save("user://settings.cfg");
         match error {
             godot::global::Error::OK => Ok(()),
-            _ => Err(Error::SaveError),
+            _ => Err(Error::Save),
         }
     }
 
@@ -67,7 +67,9 @@ impl Setting {
     }
 
     pub fn singleton() -> Result<Gd<Self>, Error> {
-        let object = godot::classes::Engine::singleton().get_singleton("Setting").context(SingletonSnafu)?;
+        let object = godot::classes::Engine::singleton()
+            .get_singleton("Setting")
+            .context(SingletonSnafu)?;
         Ok(object.cast())
     }
 }
@@ -77,7 +79,10 @@ impl IObject for Setting {
     fn init(base: Base<Self::Base>) -> Self {
         match load_config() {
             Ok(inner) => Self { inner, base },
-            Err(_) => Self { inner: default_config(), base },
+            Err(_) => Self {
+                inner: default_config(),
+                base,
+            },
         }
     }
 }

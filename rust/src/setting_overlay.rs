@@ -1,12 +1,7 @@
-use crate::setting::Setting;
-use godot::classes::input::MouseMode;
-use godot::classes::Button;
-use godot::classes::Control;
-use godot::classes::IControl;
-use godot::classes::Input;
-use godot::classes::InputEvent;
-use godot::classes::LineEdit;
+use godot::classes::{Button, Control, IControl, InputEvent, LineEdit};
 use godot::prelude::*;
+
+use crate::setting::Setting;
 
 #[derive(GodotClass)]
 #[class(base=Control)]
@@ -32,11 +27,14 @@ impl IControl for SettingOverlay {
             .connect_other(self, Self::hide);
 
         let sensitivity_input = self.base().get_node_as::<LineEdit>("Sensitivity/Input");
-        sensitivity_input.signals().text_submitted().connect_other(self, |base, value| {
-            if let Ok(sensitivity) = value.to_string().parse::<f32>() {
-                base.set_sensitivity(sensitivity)
-            };
-        });
+        sensitivity_input
+            .signals()
+            .text_submitted()
+            .connect_other(self, |base, value| {
+                if let Ok(sensitivity) = value.to_string().parse::<f32>() {
+                    base.set_sensitivity(sensitivity)
+                };
+            });
 
         self.display_value();
     }
@@ -74,6 +72,9 @@ impl SettingOverlay {
     }
 
     fn set_sensitivity(&mut self, sensitivity: f32) {
-        self.setting.bind_mut().set_and_save("global", "sensitivity", sensitivity).expect("Except ok");
+        self.setting
+            .bind_mut()
+            .set_and_save("global", "sensitivity", sensitivity)
+            .expect("Except ok");
     }
 }
