@@ -15,7 +15,7 @@ config/features=PackedStringArray("4.5", "Forward Plus")
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
+enabled=PackedStringArray("res://addons/debug_camera/plugin.cfg", "res://addons/godot_super-wakatime/plugin.cfg")
 
 [input]
 
