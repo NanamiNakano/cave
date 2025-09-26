@@ -1,4 +1,4 @@
-use godot::classes::{CharacterBody3D, ICharacterBody3D, Input};
+use godot::classes::{Camera3D, CharacterBody3D, ICharacterBody3D, Input};
 use godot::prelude::*;
 
 #[derive(GodotClass)]
@@ -6,12 +6,17 @@ use godot::prelude::*;
 struct Player {
     #[export]
     #[init(val = 5.0)]
-    pub speed: f64,
+    speed: f64,
     #[export]
     #[init(val = 4.5)]
-    pub jump_velocity: f64,
+    jump_velocity: f64,
     #[init(val = Vector3::ZERO)]
     target_velocity: Vector3,
+
+    #[init(node = "Head")]
+    head: OnReady<Gd<Node3D>>,
+    #[init(node = "Head/Camera3D")]
+    cam: OnReady<Gd<Camera3D>>,
 
     base: Base<CharacterBody3D>
 }
