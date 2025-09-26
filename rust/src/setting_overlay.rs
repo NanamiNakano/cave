@@ -5,7 +5,7 @@ use crate::setting::Setting;
 
 #[derive(GodotClass)]
 #[class(base=Control)]
-pub struct SettingOverlay {
+pub(crate) struct SettingOverlay {
     setting: Gd<Setting>,
     base: Base<Control>,
 }

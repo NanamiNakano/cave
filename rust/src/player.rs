@@ -10,12 +10,12 @@ use std::f32::consts::PI;
 struct Player {
     #[export]
     #[init(val = 5.0)]
-    pub speed: f64,
+    speed: f64,
     #[export]
     #[init(val = 4.5)]
-    pub jump_velocity: f64,
+    jump_velocity: f64,
     #[init(val = Vector3::ZERO)]
-    pub target_velocity: Vector3,
+    target_velocity: Vector3,
 
     #[init(node = "Head")]
     head: OnReady<Gd<Node3D>>,

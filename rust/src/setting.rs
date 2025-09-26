@@ -3,7 +3,7 @@ use godot::prelude::*;
 use snafu::{OptionExt, ResultExt, Snafu};
 
 #[derive(Debug, Snafu)]
-pub enum Error {
+pub(crate) enum Error {
     #[snafu(display("Error when saving config"))]
     Save,
     #[snafu(display("Error when loading config"))]
@@ -16,7 +16,7 @@ pub enum Error {
 
 #[derive(GodotClass)]
 #[class(base=Object)]
-pub struct Setting {
+pub(crate) struct Setting {
     inner: Gd<ConfigFile>,
     base: Base<Object>,
 }
