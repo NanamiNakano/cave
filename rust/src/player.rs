@@ -24,42 +24,20 @@ struct Player {
 #[godot_api]
 impl ICharacterBody3D for Player {
     fn physics_process(&mut self, delta: f64) {
-        let mut direction = Vector3::ZERO;
-
         let input = Input::singleton();
-        if input.is_action_pressed("move_left") {
-            direction.x += 1.0;
-        }
-        if input.is_action_pressed("move_right") {
-            direction.x -= 1.0;
-        }
-        if input.is_action_pressed("move_forward") {
-            direction.z += 1.0;
-        }
-        if input.is_action_pressed("move_back") {
-            direction.z -= 1.0;
-        }
 
-        if direction != Vector3::ZERO {
-            let mut pivot = self.base().get_node_as::<Node3D>("Pivot");
-            direction = direction.normalized();
-            pivot.set_basis(Basis::looking_at(
-                direction,
-                Vector3::new(0.0, 1.0, 0.0),
-                true,
-            ))
-        }
+        let h_direction = input.get_vector("move_right", "move_left", "move_back", "move_forward");
+        let direction = Vector3::new(h_direction.x, 0.0, h_direction.y).normalized();
 
-        if input.is_action_pressed("jump") && self.base().is_on_floor() {
-            self.target_velocity.y = self.jump_velocity as f32
-        }
-
-        self.target_velocity.x = direction.x * self.speed as f32;
-        self.target_velocity.z = direction.z * self.speed as f32;
-
-        if !self.base().is_on_floor() {
+        if self.base().is_on_floor() {
+            if input.is_action_pressed("jump") {
+                self.target_velocity.y = self.jump_velocity as f32
+            }
+        } else {
             self.target_velocity += self.base().get_gravity() * delta as f32;
         }
+        self.target_velocity.x = direction.x * self.speed as f32;
+        self.target_velocity.z = direction.z * self.speed as f32;
 
         let target_velocity = self.target_velocity;
         self.base_mut().set_velocity(target_velocity);
