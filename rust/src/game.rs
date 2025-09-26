@@ -20,11 +20,17 @@ impl INode for Game {
         setting_overlay
             .signals()
             .hidden()
-            .connect(Self::capture_mouse);
+            .connect_other(self, |base| {
+                Self::capture_mouse();
+                base.resume();
+            });
         setting_overlay
             .signals()
             .shown()
-            .connect(Self::release_mouse);
+            .connect_other(self, |base| {
+                Self::release_mouse();
+                base.pause();
+            });
 
         setting_overlay.bind_mut().hide();
     }
@@ -40,5 +46,15 @@ impl Game {
     fn release_mouse() {
         let mut input = Input::singleton();
         input.set_mouse_mode(MouseMode::VISIBLE)
+    }
+
+    fn pause(&self) {
+        let mut tree = self.base().get_tree().expect("Expect tree to exist");
+        tree.set_pause(true);
+    }
+
+    fn resume(&self) {
+        let mut tree = self.base().get_tree().expect("Expect tree to exist");
+        tree.set_pause(false);
     }
 }

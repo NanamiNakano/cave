@@ -41,7 +41,7 @@ impl IControl for SettingOverlay {
 
     fn unhandled_key_input(&mut self, event: Gd<InputEvent>) {
         if event.is_action_pressed("escape") {
-            self.show()
+            self.toggle()
         }
     }
 }
@@ -69,6 +69,14 @@ impl SettingOverlay {
         self.display_value();
         self.base_mut().set_visible(true);
         self.signals().shown().emit();
+    }
+
+    pub fn toggle(&mut self) {
+        if self.base().is_visible() {
+            self.hide()
+        } else {
+            self.show();
+        }
     }
 
     fn set_sensitivity(&mut self, sensitivity: f32) {
