@@ -1,9 +1,10 @@
 mod player;
-mod config;
+mod setting;
+mod setting_overlay;
 
 use godot::classes::Engine;
 use godot::prelude::*;
-use crate::config::Setting;
+use crate::setting::Setting;
 
 struct Cave;
 
