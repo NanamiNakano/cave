@@ -3,13 +3,13 @@
 [ext_resource type="PackedScene" uid="uid://ddxdi8icooo8m" path="res://models/Mr A Exporting.glb" id="1_3vyb7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ixlod"]
-size = Vector3(0.7, 2, 0.7)
+size = Vector3(0.9, 2, 0.9)
 
 [node name="Player" type="Player"]
 
 [node name="Pivot" type="Node3D" parent="."]
 
-[node name="Mr A Exporting" parent="Pivot" instance=ExtResource("1_3vyb7")]
+[node name="Mr A" parent="Pivot" instance=ExtResource("1_3vyb7")]
 transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -20,4 +20,4 @@ shape = SubResource("BoxShape3D_ixlod")
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.651, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7391336e-08, 0, -0.5069337)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2881536e-08, 0, -0.4553476)
