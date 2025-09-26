@@ -14,7 +14,7 @@ pub struct SettingOverlay {
 impl IControl for SettingOverlay {
     fn init(base: Base<Self::Base>) -> Self {
         Self {
-            setting: Setting::singleton().expect("Except setting singleton exists"),
+            setting: Setting::singleton().expect("Expect setting singleton to exist"),
             base,
         }
     }
@@ -54,7 +54,7 @@ impl SettingOverlay {
             .setting
             .bind()
             .get_value::<f32>("global", "sensitivity")
-            .expect("Except valur exists");
+            .expect("Expect value to exist");
         sensitivity_input.set_text(&sensitivity_setting.to_string())
     }
 
@@ -75,6 +75,6 @@ impl SettingOverlay {
         self.setting
             .bind_mut()
             .set_and_save("global", "sensitivity", sensitivity)
-            .expect("Except ok");
+            .expect("Expect ok");
     }
 }
