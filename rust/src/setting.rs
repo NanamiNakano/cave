@@ -74,6 +74,17 @@ impl Setting {
     }
 }
 
+#[godot_api(secondary)]
+impl Setting {
+    pub fn set_sensitivity(&mut self, sensitivity: f32) {
+        self.set_and_save("global", "sensitivity", sensitivity).expect("Expect ok")
+    }
+
+    pub fn get_sensitivity(&self) -> f32 {
+        self.get_value("global", "sensitivity").expect("Expect ok")
+    }
+}
+
 #[godot_api]
 impl IObject for Setting {
     fn init(base: Base<Self::Base>) -> Self {

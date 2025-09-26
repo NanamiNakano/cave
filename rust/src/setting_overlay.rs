@@ -32,7 +32,7 @@ impl IControl for SettingOverlay {
             .text_submitted()
             .connect_other(self, |base, value| {
                 if let Ok(sensitivity) = value.to_string().parse::<f32>() {
-                    base.set_sensitivity(sensitivity)
+                    base.setting.bind_mut().set_sensitivity(sensitivity);
                 };
             });
 
@@ -77,12 +77,5 @@ impl SettingOverlay {
         } else {
             self.show();
         }
-    }
-
-    fn set_sensitivity(&mut self, sensitivity: f32) {
-        self.setting
-            .bind_mut()
-            .set_and_save("global", "sensitivity", sensitivity)
-            .expect("Expect ok");
     }
 }
