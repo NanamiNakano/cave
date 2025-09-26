@@ -31,6 +31,8 @@ impl INode for Game {
                 Self::release_mouse();
                 base.pause();
             });
+
+        Self::capture_mouse();
     }
 }
 
