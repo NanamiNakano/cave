@@ -27,7 +27,7 @@ impl ICharacterBody3D for Player {
         let input = Input::singleton();
 
         let h_direction = input.get_vector("move_right", "move_left", "move_back", "move_forward");
-        let direction = Vector3::new(h_direction.x, 0.0, h_direction.y).normalized();
+        let direction = Vector3::new(h_direction.x, 0.0, h_direction.y);
 
         if self.base().is_on_floor() {
             if input.is_action_pressed("jump") {
