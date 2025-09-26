@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://jo1bkm2b8kfq"]
+
+[ext_resource type="PackedScene" uid="uid://bg2jw7x6u4vfv" path="res://scenes/testing_world.tscn" id="1_cdre3"]
+[ext_resource type="PackedScene" uid="uid://daslxfcrin4ja" path="res://scenes/player.tscn" id="2_qofmi"]
+[ext_resource type="PackedScene" uid="uid://b7jvjidjj77wu" path="res://scenes/setting_overlay.tscn" id="3_3v2ht"]
+
+[node name="TestingGame" type="Game"]
+
+[node name="TestingWorld" parent="." instance=ExtResource("1_cdre3")]
+
+[node name="Player" parent="." instance=ExtResource("2_qofmi")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="SettingOverlay" parent="CanvasLayer" instance=ExtResource("3_3v2ht")]

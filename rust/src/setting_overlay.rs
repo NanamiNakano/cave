@@ -10,7 +10,7 @@ use godot::prelude::*;
 
 #[derive(GodotClass)]
 #[class(base=Control)]
-struct SettingOverlay {
+pub struct SettingOverlay {
     setting: Gd<Setting>,
     base: Base<Control>,
 }
@@ -43,10 +43,7 @@ impl IControl for SettingOverlay {
 
     fn unhandled_key_input(&mut self, event: Gd<InputEvent>) {
         if event.is_action_pressed("escape") {
-            self.display_value();
-            let mut input = Input::singleton();
-            input.set_mouse_mode(MouseMode::VISIBLE);
-            self.base_mut().set_visible(true);
+            self.show()
         }
     }
 }
@@ -63,10 +60,17 @@ impl SettingOverlay {
         sensitivity_input.set_text(&sensitivity_setting.to_string())
     }
 
-    fn hide(&mut self) {
-        let mut input = Input::singleton();
-        input.set_mouse_mode(MouseMode::CAPTURED);
+    pub fn hide(&mut self) {
         self.base_mut().set_visible(false);
+        self.signals().hidden().emit();
+    }
+
+    #[signal]
+    pub fn shown();
+    pub fn show(&mut self) {
+        self.display_value();
+        self.base_mut().set_visible(true);
+        self.signals().shown().emit();
     }
 
     fn set_sensitivity(&mut self, sensitivity: f32) {

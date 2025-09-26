@@ -1,6 +1,7 @@
 mod player;
 mod setting;
 mod setting_overlay;
+mod game;
 
 use godot::classes::Engine;
 use godot::prelude::*;
