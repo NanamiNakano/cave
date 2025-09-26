@@ -66,11 +66,12 @@ impl Setting {
         Ok(value)
     }
 
-    pub fn singleton() -> Result<Gd<Self>, Error> {
+    pub fn singleton() -> Gd<Self> {
         let object = godot::classes::Engine::singleton()
             .get_singleton("Setting")
-            .context(SingletonSnafu)?;
-        Ok(object.cast())
+            .context(SingletonSnafu)
+            .expect("Expect singleton to exist");
+        object.cast()
     }
 }
 

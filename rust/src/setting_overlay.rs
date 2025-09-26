@@ -14,7 +14,7 @@ pub struct SettingOverlay {
 impl IControl for SettingOverlay {
     fn init(base: Base<Self::Base>) -> Self {
         Self {
-            setting: Setting::singleton().expect("Expect setting singleton to exist"),
+            setting: Setting::singleton(),
             base,
         }
     }
