@@ -57,7 +57,6 @@ impl ICharacterBody3D for Player {
         self.head.rotate_x(mouse_motion.get_relative().y * sensitivity);
 
         let mut raw_head_rotation = self.head.get_rotation();
-        godot_print!("{:?}", raw_head_rotation);
         raw_head_rotation.x = raw_head_rotation.x.clamp(-PI/3.0, PI/3.0);
         self.head.set_rotation(raw_head_rotation);
     }
