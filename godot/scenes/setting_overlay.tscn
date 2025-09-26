@@ -4,6 +4,11 @@
 offset_right = 1152.0
 offset_bottom = 648.0
 
+[node name="Background" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
 [node name="Sensitivity" type="Label" parent="."]
 layout_mode = 0
 offset_left = 16.0
