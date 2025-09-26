@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://b7jvjidjj77wu"]
+
+[node name="SettingOverlay" type="SettingOverlay"]
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Sensitivity" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 96.0
+offset_bottom = 39.0
+text = "Sensitivity"
+
+[node name="Input" type="LineEdit" parent="Sensitivity"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = -8.0
+offset_right = 156.5625
+offset_bottom = 23.0
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 56.0
+offset_right = 152.0
+offset_bottom = 96.0
+text = "Back to game"
