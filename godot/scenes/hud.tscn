@@ -27,7 +27,7 @@ expand_mode = 1
 
 [node name="Debug" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 944.0
+offset_left = 832.0
 offset_top = 8.0
 offset_right = 1147.0
 offset_bottom = 64.0

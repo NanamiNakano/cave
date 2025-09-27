@@ -5,7 +5,7 @@ use godot::classes::{
     AnimationPlayer, CharacterBody3D, ICharacterBody3D, Input, InputEvent, InputEventMouseMotion,
 };
 use godot::prelude::*;
-
+use crate::player::PhysicState::{WalkingBack, WalkingForward};
 use crate::setting::Setting;
 
 #[derive(GodotClass)]
@@ -34,7 +34,10 @@ pub(crate) struct Player {
 #[godot(via=GString)]
 pub enum PhysicState {
     Idle,
-    Walking,
+    WalkingForward,
+    WalkingBack,
+    WalkingLeft,
+    WalkingRight,
     Jumping,
     Falling,
 }
@@ -52,7 +55,19 @@ impl ICharacterBody3D for Player {
         self.target_velocity.x = direction.x * self.speed as f32;
         self.target_velocity.z = direction.z * self.speed as f32;
         if self.target_velocity.x != 0.0 || self.target_velocity.z != 0.0 {
-            future_state = PhysicState::Walking;
+            if h_direction.x != 0.0 {
+                future_state = match h_direction.x {
+                    x if x < 0.0 => PhysicState::WalkingRight,
+                    x if x > 0.0 => PhysicState::WalkingLeft,
+                    _ => unreachable!()
+                }
+            } else {
+                future_state = match h_direction.y {
+                    y if y < 0.0 => WalkingBack,
+                    y if y > 0.0 => WalkingForward,
+                    _ => unreachable!()
+                }
+            }
         } else {
             future_state = PhysicState::Idle;
         }
@@ -108,4 +123,8 @@ impl ICharacterBody3D for Player {
 impl Player {
     #[signal]
     pub fn physic_state_changed(state: PhysicState);
+
+    pub fn animation_process(&mut self) {
+
+    }
 }
