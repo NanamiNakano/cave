@@ -78,7 +78,8 @@ impl Setting {
 #[godot_api(secondary)]
 impl Setting {
     pub fn set_sensitivity(&mut self, sensitivity: f32) {
-        self.set_and_save("global", "sensitivity", sensitivity).expect("Expect ok")
+        self.set_and_save("global", "sensitivity", sensitivity)
+            .expect("Expect ok")
     }
 
     pub fn get_sensitivity(&self) -> f32 {

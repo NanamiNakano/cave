@@ -13,6 +13,10 @@ config_version=5
 config/name="Cave"
 config/features=PackedStringArray("4.5", "Forward Plus")
 
+[autoload]
+
+DebugCam="*res://addons/debug_camera/scripts/DebugCamAutoload.gd"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/debug_camera/plugin.cfg", "res://addons/godot_super-wakatime/plugin.cfg")

@@ -2,8 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c5jwtfhu7gfif" path="res://Cursor.png" id="1_ahhtf"]
 
-[node name="HUD" type="Control"]
-layout_mode = 3
+[node name="HUD" type="Hud"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -25,3 +24,26 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_ahhtf")
 expand_mode = 1
+
+[node name="Debug" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 944.0
+offset_top = 8.0
+offset_right = 1147.0
+offset_bottom = 64.0
+
+[node name="PhysicState" type="HBoxContainer" parent="Debug"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 79.0
+offset_bottom = 48.0
+
+[node name="Label" type="Label" parent="Debug/PhysicState"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "State:"
+
+[node name="Value" type="Label" parent="Debug/PhysicState"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24

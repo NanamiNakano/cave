@@ -1,40 +1,48 @@
-use godot::classes::{Control, Input};
+use godot::classes::Input;
 use godot::classes::input::MouseMode;
 use godot::prelude::*;
+
 use crate::hud::Hud;
+use crate::player::Player;
 use crate::setting_overlay::SettingOverlay;
 
 #[derive(GodotClass)]
 #[class(init, base=Node)]
 struct Game {
     base: Base<Node>,
+
+    #[init(node = "CanvasLayer/SettingOverlay")]
+    setting_overlay: OnReady<Gd<SettingOverlay>>,
+    #[init(node = "CanvasLayer/HUD")]
+    hud: OnReady<Gd<Hud>>,
+    #[init(node = "Player")]
+    player: OnReady<Gd<Player>>,
 }
 
 #[godot_api]
 impl INode for Game {
     fn ready(&mut self) {
-        let setting_overlay = self
-            .base()
-            .get_node_as::<SettingOverlay>("CanvasLayer/SettingOverlay");
-
-        setting_overlay
+        self.setting_overlay
             .signals()
             .hidden()
-            .connect_other(self, |base| {
+            .connect_other(self, |game| {
                 Self::capture_mouse();
-                base.resume();
-                let mut hud = base.base().get_node_as::<Hud>("CanvasLayer/HUD");
-                hud.set_visible(true)
+                game.resume();
+                game.hud.set_visible(true)
             });
-        setting_overlay
+        self.setting_overlay
             .signals()
             .shown()
-            .connect_other(self, |base| {
+            .connect_other(self, |game| {
                 Self::release_mouse();
-                base.pause();
-                let mut hud = base.base().get_node_as::<Hud>("CanvasLayer/HUD");
-                hud.set_visible(false);
+                game.pause();
+                game.hud.set_visible(false);
             });
+
+        self.player
+            .signals()
+            .physic_state_changed()
+            .connect_other(&(*self.hud), Hud::change_state);
 
         Self::capture_mouse();
     }
