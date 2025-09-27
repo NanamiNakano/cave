@@ -1,7 +1,7 @@
 use godot::classes::{Control, Input};
 use godot::classes::input::MouseMode;
 use godot::prelude::*;
-
+use crate::hud::Hud;
 use crate::setting_overlay::SettingOverlay;
 
 #[derive(GodotClass)]
@@ -23,7 +23,7 @@ impl INode for Game {
             .connect_other(self, |base| {
                 Self::capture_mouse();
                 base.resume();
-                let mut hud = base.base().get_node_as::<Control>("CanvasLayer/HUD");
+                let mut hud = base.base().get_node_as::<Hud>("CanvasLayer/HUD");
                 hud.set_visible(true)
             });
         setting_overlay
@@ -32,8 +32,8 @@ impl INode for Game {
             .connect_other(self, |base| {
                 Self::release_mouse();
                 base.pause();
-                let mut hud = base.base().get_node_as::<Control>("CanvasLayer/HUD");
-                hud.clone().set_visible(false);
+                let mut hud = base.base().get_node_as::<Hud>("CanvasLayer/HUD");
+                hud.set_visible(false);
             });
 
         Self::capture_mouse();
