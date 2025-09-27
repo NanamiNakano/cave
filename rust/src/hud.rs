@@ -4,6 +4,7 @@ use godot::classes::IControl;
 use godot::classes::Label;
 use godot::classes::{Control, Panel};
 use godot::prelude::*;
+use crate::player::PhysicState;
 
 #[derive(GodotClass)]
 #[class(init, base=Control)]
@@ -17,10 +18,10 @@ pub(crate) struct Hud {
 #[cfg(debug_assertions)]
 #[godot_api]
 impl Hud {
-    pub fn change_state(&mut self, state: GString) {
+    pub fn change_state(&mut self, state: PhysicState) {
         //TODO: Change to enum PhysicState
         let mut physic_state = self.debug.get_node_as::<Label>("PhysicState/Value");
-        physic_state.set_text(&state)
+        physic_state.set_text(&state.to_string())
     }
 }
 

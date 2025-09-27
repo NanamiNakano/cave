@@ -18,7 +18,7 @@ unsafe impl ExtensionLibrary for Cave {
         if level == InitLevel::Scene {
             godot_print!("Registering settings singleton");
             Engine::singleton().register_singleton(
-                &Setting::class_name().to_string_name(),
+                "Setting",
                 &Setting::new_alloc(),
             );
         }
@@ -28,7 +28,7 @@ unsafe impl ExtensionLibrary for Cave {
         godot_print!("Rust: Deinited on {:?}", level);
         if level == InitLevel::Scene {
             let mut engine = Engine::singleton();
-            let singleton_name = &Setting::class_name().to_string_name();
+            let singleton_name = "Setting";
 
             if let Some(my_singleton) = engine.get_singleton(singleton_name) {
                 // Unregistering from Godot, and freeing from memory is required

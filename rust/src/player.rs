@@ -32,7 +32,7 @@ pub(crate) struct Player {
 
 #[derive(GodotConvert, PartialOrd, PartialEq, Debug, Clone, Display, Copy)]
 #[godot(via=GString)]
-pub(crate) enum PhysicState {
+pub enum PhysicState {
     Idle,
     Walking,
     Jumping,
@@ -47,7 +47,7 @@ impl ICharacterBody3D for Player {
 
         let h_direction = input.get_vector("move_right", "move_left", "move_back", "move_forward");
         let direction = h_direction.x * basis.col_a() + h_direction.y * basis.col_c();
-        let mut future_state = self.physic_state;
+        let mut future_state;
 
         self.target_velocity.x = direction.x * self.speed as f32;
         self.target_velocity.z = direction.z * self.speed as f32;
@@ -76,7 +76,7 @@ impl ICharacterBody3D for Player {
             self.physic_state = future_state;
             self.signals()
                 .physic_state_changed()
-                .emit(&future_state.to_string())
+                .emit(future_state.clone())
         }
         let target_velocity = self.target_velocity;
         self.base_mut().set_velocity(target_velocity);
@@ -84,7 +84,7 @@ impl ICharacterBody3D for Player {
     }
 
     fn ready(&mut self) {
-        self.signals().physic_state_changed().emit(&PhysicState::Idle.to_string())
+        self.signals().physic_state_changed().emit(PhysicState::Idle)
     }
 
     fn input(&mut self, event: Gd<InputEvent>) {
@@ -107,5 +107,5 @@ impl ICharacterBody3D for Player {
 #[godot_api]
 impl Player {
     #[signal]
-    pub fn physic_state_changed(state: GString); //TODO: Change to enum PhysicState
+    pub fn physic_state_changed(state: PhysicState);
 }
