@@ -1,4 +1,8 @@
-use godot::classes::{Control, Label};
+#[cfg(not(debug_assertions))]
+use godot::classes::IControl;
+#[cfg(debug_assertions)]
+use godot::classes::Label;
+use godot::classes::{Control, Panel};
 use godot::prelude::*;
 
 #[derive(GodotClass)]
@@ -6,14 +10,24 @@ use godot::prelude::*;
 pub(crate) struct Hud {
     base: Base<Control>,
 
-    #[init(node = "Debug/PhysicState/Value")]
-    physic_state: OnReady<Gd<Label>>,
+    #[init(node = "Debug")]
+    debug: OnReady<Gd<Panel>>,
 }
 
+#[cfg(debug_assertions)]
 #[godot_api]
 impl Hud {
     pub fn change_state(&mut self, state: GString) {
         //TODO: Change to enum PhysicState
-        self.physic_state.set_text(&state)
+        let mut physic_state = self.debug.get_node_as::<Label>("PhysicState/Value");
+        physic_state.set_text(&state)
+    }
+}
+
+#[cfg(not(debug_assertions))]
+#[godot_api]
+impl IControl for Hud {
+    fn ready(&mut self) {
+        self.debug.queue_free()
     }
 }

@@ -39,6 +39,7 @@ impl INode for Game {
                 game.hud.set_visible(false);
             });
 
+        #[cfg(debug_assertions)]
         self.player
             .signals()
             .physic_state_changed()

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cu0v0addcjx1r"
 path.s3tc="res://.godot/imported/PlaceholderTile.jpg-09500c24db2f4852294eda5dd64f120c.s3tc.ctex"
+path.etc2="res://.godot/imported/PlaceholderTile.jpg-09500c24db2f4852294eda5dd64f120c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://PlaceholderTile.jpg"
-dest_files=["res://.godot/imported/PlaceholderTile.jpg-09500c24db2f4852294eda5dd64f120c.s3tc.ctex"]
+dest_files=["res://.godot/imported/PlaceholderTile.jpg-09500c24db2f4852294eda5dd64f120c.s3tc.ctex", "res://.godot/imported/PlaceholderTile.jpg-09500c24db2f4852294eda5dd64f120c.etc2.ctex"]
 
 [params]
 
