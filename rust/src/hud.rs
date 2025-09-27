@@ -19,7 +19,6 @@ pub(crate) struct Hud {
 #[godot_api]
 impl Hud {
     pub fn change_state(&mut self, state: PhysicState) {
-        //TODO: Change to enum PhysicState
         let mut physic_state = self.debug.get_node_as::<Label>("PhysicState/Value");
         physic_state.set_text(&state.to_string())
     }
