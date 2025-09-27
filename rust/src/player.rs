@@ -49,12 +49,16 @@ impl ICharacterBody3D for Player {
         let direction = h_direction.x * basis.col_a() + h_direction.y * basis.col_c();
         let mut future_state = self.physic_state;
 
+        self.target_velocity.x = direction.x * self.speed as f32;
+        self.target_velocity.z = direction.z * self.speed as f32;
+        if self.target_velocity.x != 0.0 || self.target_velocity.z != 0.0 {
+            future_state = PhysicState::Walking;
+        } else {
+            future_state = PhysicState::Idle;
+        }
+
         if self.base().is_on_floor() {
             self.target_velocity.y = 0.0;
-            if self.physic_state != PhysicState::Walking {
-                future_state = PhysicState::Idle;
-            }
-
             if input.is_action_pressed("jump") {
                 self.target_velocity.y = self.jump_velocity as f32;
                 future_state = PhysicState::Jumping;
@@ -63,11 +67,10 @@ impl ICharacterBody3D for Player {
             self.target_velocity += self.base().get_gravity() * delta as f32;
             if self.target_velocity.y < 0.0 {
                 future_state = PhysicState::Falling;
+            } else {
+                future_state = PhysicState::Jumping;
             }
         }
-        self.target_velocity.x = direction.x * self.speed as f32;
-        self.target_velocity.z = direction.z * self.speed as f32;
-        let target_velocity = self.target_velocity;
 
         if future_state != self.physic_state {
             self.physic_state = future_state;
@@ -75,8 +78,13 @@ impl ICharacterBody3D for Player {
                 .physic_state_changed()
                 .emit(&future_state.to_string())
         }
+        let target_velocity = self.target_velocity;
         self.base_mut().set_velocity(target_velocity);
         self.base_mut().move_and_slide();
+    }
+
+    fn ready(&mut self) {
+        self.signals().physic_state_changed().emit(&PhysicState::Idle.to_string())
     }
 
     fn input(&mut self, event: Gd<InputEvent>) {
