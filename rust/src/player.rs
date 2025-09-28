@@ -4,8 +4,8 @@ use derive_more::Display;
 use godot::classes::{
     AnimationPlayer, CharacterBody3D, ICharacterBody3D, Input, InputEvent, InputEventMouseMotion,
 };
+use godot::classes::animation::LoopMode;
 use godot::prelude::*;
-use crate::player::PhysicState::{WalkingBack, WalkingForward};
 use crate::setting::Setting;
 
 #[derive(GodotClass)]
@@ -63,8 +63,8 @@ impl ICharacterBody3D for Player {
                 }
             } else {
                 future_state = match h_direction.y {
-                    y if y < 0.0 => WalkingBack,
-                    y if y > 0.0 => WalkingForward,
+                    y if y < 0.0 => PhysicState::WalkingBack,
+                    y if y > 0.0 => PhysicState::WalkingForward,
                     _ => unreachable!()
                 }
             }
@@ -91,7 +91,8 @@ impl ICharacterBody3D for Player {
             self.physic_state = future_state;
             self.signals()
                 .physic_state_changed()
-                .emit(future_state.clone())
+                .emit(future_state.clone());
+            self.animation_process()
         }
         let target_velocity = self.target_velocity;
         self.base_mut().set_velocity(target_velocity);
@@ -99,6 +100,12 @@ impl ICharacterBody3D for Player {
     }
 
     fn ready(&mut self) {
+        self.ani_player.get_animation("Idle").expect("Expect animation to exist").set_loop_mode(LoopMode::LINEAR);
+        self.ani_player.get_animation("WalkingForward").expect("Expect animation to exist").set_loop_mode(LoopMode::LINEAR);
+        self.ani_player.get_animation("WalkingBack").expect("Expect animation to exist").set_loop_mode(LoopMode::LINEAR);
+        self.ani_player.get_animation("WalkingStrafeLeft").expect("Expect animation to exist").set_loop_mode(LoopMode::LINEAR);
+        self.ani_player.get_animation("WalkingStrafeRight").expect("Expect animation to exist").set_loop_mode(LoopMode::LINEAR);
+        self.ani_player.set_current_animation("Idle");
         self.signals().physic_state_changed().emit(PhysicState::Idle)
     }
 
@@ -125,6 +132,15 @@ impl Player {
     pub fn physic_state_changed(state: PhysicState);
 
     pub fn animation_process(&mut self) {
-
+        let animation_name = match self.physic_state {
+            PhysicState::Idle => "Idle",
+            PhysicState::WalkingForward => "WalkingForward",
+            PhysicState::WalkingBack => "WalkingBack",
+            PhysicState::WalkingLeft => "WalkingStrafeLeft",
+            PhysicState::WalkingRight => "WalkingStrafeRight",
+            PhysicState::Jumping => "Jumping",
+            PhysicState::Falling => "Falling",
+        };
+        self.ani_player.set_current_animation(animation_name);
     }
 }
